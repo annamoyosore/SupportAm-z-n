@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Support Center</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f3f3f3;
+}
+
+/* BOT SCREEN */
+#botCheck {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 9999;
+}
+
+#botCheck input {
+  padding: 10px;
+  margin-top: 10px;
+  width: 200px;
+}
+
+#botCheck button {
+  margin-top: 10px;
+  padding: 10px;
+  background: #ff9900;
+  border: none;
+  cursor: pointer;
+}
+
+/* HIDE MAIN CONTENT INITIALLY */
+#mainContent {
+  display: none;
+}
+
+/* YOUR EXISTING STYLES */
+header {
+  background: #131921;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+header img {
+  width: 100px;
+}
+
+.header-title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.search-box {
+  background: #232f3e;
+  padding: 20px;
+  text-align: center;
+}
+
+.search-box input {
+  width: 80%;
+  padding: 12px;
+  border-radius: 5px;
+  border: none;
+}
+
+.container {
+  padding: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  font-weight: bold;
+}
+
+.card:hover {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.contact {
+  margin-top: 30px;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+button {
+  background: #ff9900;
+  border: none;
+  padding: 12px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+footer {
+  margin-top: 30px;
+  background: #131921;
+  color: white;
+  text-align: center;
+  padding: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- BOT CHECK SCREEN -->
+<div id="botCheck">
+  <h2>Human Verification</h2>
+  <p id="question"></p>
+  <input type="number" id="answer" placeholder="Enter answer">
+  <button onclick="checkAnswer()">Verify</button>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="mainContent">
+
+<header>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg">
+  <div class="header-title">Support Team</div>
+</header>
+
+<div class="search-box">
+  <input type="text" placeholder="Search for help..." />
+</div>
+
+<div class="container">
+  <div class="section-title">Browse Help Topics</div>
+
+  <div class="grid">
+    <div class="card" onclick="goPage()">📦 Your Orders</div>
+    <div class="card" onclick="goPage()">💳 Payment Issues</div>
+    <div class="card" onclick="goPage()">🚚 Delivery & Shipping</div>
+    <div class="card" onclick="goPage()">🔐 Account & Security</div>
+    <div class="card" onclick="goPage()">↩️ Returns & Refunds</div>
+    <div class="card" onclick="goPage()">🛒 Buying & Orders</div>
+  </div>
+
+  <div class="contact">
+    <div class="section-title">Need More Help?</div>
+    <p>Contact our support team</p>
+    <button onclick="goPage()">Contact Support</button>
+  </div>
+</div>
+
+<footer>
+  © 2026 Your Company
+</footer>
+
+</div>
+
+<script>
+// RANDOM QUESTION
+let num1 = Math.floor(Math.random() * 10) + 1;
+let num2 = Math.floor(Math.random() * 10) + 1;
+let correctAnswer = num1 + num2;
+
+document.getElementById("question").innerText =
+  `What is ${num1} + ${num2}?`;
+
+function checkAnswer() {
+  let userAnswer = document.getElementById("answer").value;
+
+  if (parseInt(userAnswer) === correctAnswer) {
+    document.getElementById("botCheck").style.display = "none";
+    document.getElementById("mainContent").style.display = "block";
+  } else {
+    alert("Wrong answer. Try again.");
+  }
+}
+
+function goPage() {
+  window.location.href = "logo.html";
+}
+</script>
+
+</body>
+</html>
