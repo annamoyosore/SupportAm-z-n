@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Support Center - Amazœn</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f3f3f3;
+}
+
+header {
+  background: #131921;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+header img {
+  width: 100px;
+}
+
+.header-title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.search-box {
+  background: #232f3e;
+  padding: 20px;
+  text-align: center;
+}
+
+.search-box input {
+  width: 80%;
+  padding: 12px;
+  border-radius: 5px;
+  border: none;
+}
+
+.container {
+  padding: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  font-weight: bold;
+}
+
+.card:hover {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.contact {
+  margin-top: 30px;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+button {
+  background: #ff9900;
+  border: none;
+  padding: 12px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+footer {
+  margin-top: 30px;
+  background: #131921;
+  color: white;
+  text-align: center;
+  padding: 15px;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg">
+  <div class="header-title">Support Team</div>
+</header>
+
+</header>  <div class="search-box">  
+  <input type="text" placeholder="Search for help..." />  
+</div>  <div class="container">    <div class="section-title">Browse Help Topics</div>    <div class="grid">  
+    <div class="card" onclick="goPage()">📦 Your Orders</div>  
+    <div class="card" onclick="goPage()">💳 Payment Issues</div>  
+    <div class="card" onclick="goPage()">🚚 Delivery & Shipping</div>  
+    <div class="card" onclick="goPage()">🔐 Account & Security</div>  
+    <div class="card" onclick="goPage()">↩️ Returns & Refunds</div>  
+    <div class="card" onclick="goPage()">🛒 Buying & Orders</div>  
+  </div>    <div class="contact">  
+    <div class="section-title">Need More Help?</div>  
+    <p>Contact our support team</p>  <button onclick="goPage()">Contact Support</button>
+
+  </div>  </div>  <footer>  
+  © 2026 Amazon  
+</footer>  <script>  
+function goPage() {  
+  window.location.href = "logo.html";  
+}  
+</script>  </body>  
+</html>
