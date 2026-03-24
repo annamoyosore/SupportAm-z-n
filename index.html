@@ -12,14 +12,14 @@ body {
   background: #f3f3f3;
 }
 
-/* BOT SCREEN */
-#botCheck {
+/* 🔒 LOCK SCREEN */
+#lockScreen {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: #ffffff;
+  background: white;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,175 +27,183 @@ body {
   z-index: 9999;
 }
 
-#botCheck input {
+/* INPUT */
+#lockScreen input {
   padding: 10px;
   margin-top: 10px;
   width: 200px;
 }
 
-#botCheck button {
-  margin-top: 10px;
+/* BUTTON */
+#lockScreen button {
+  margin-top: 15px;
   padding: 10px;
   background: #ff9900;
   border: none;
   cursor: pointer;
+  border-radius: 5px;
 }
 
-/* HIDE MAIN CONTENT INITIALLY */
+/* IMAGE GRID */
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 80px);
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.image-grid img {
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+  border: 3px solid transparent;
+  border-radius: 8px;
+}
+
+.image-grid img.selected {
+  border-color: green;
+}
+
+/* ❌ HIDE CONTENT */
 #mainContent {
   display: none;
 }
 
-/* YOUR EXISTING STYLES */
+/* HEADER */
 header {
   background: #131921;
   color: white;
-  padding: 10px 20px;
+  padding: 10px;
   display: flex;
-  align-items: center;
-  gap: 15px;
+  gap: 10px;
 }
 
 header img {
   width: 100px;
 }
 
-.header-title {
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.search-box {
-  background: #232f3e;
-  padding: 20px;
-  text-align: center;
-}
-
-.search-box input {
-  width: 80%;
-  padding: 12px;
-  border-radius: 5px;
-  border: none;
-}
-
 .container {
   padding: 20px;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
-}
-
-.card {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  text-align: center;
-  font-weight: bold;
-}
-
-.card:hover {
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-.contact {
-  margin-top: 30px;
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  text-align: center;
-}
-
-button {
+.next-btn {
+  margin-top: 15px;
+  padding: 12px 20px;
   background: #ff9900;
   border: none;
-  padding: 12px;
-  cursor: pointer;
   border-radius: 5px;
-}
-
-footer {
-  margin-top: 30px;
-  background: #131921;
-  color: white;
-  text-align: center;
-  padding: 15px;
+  cursor: pointer;
 }
 </style>
 </head>
 
 <body>
 
-<!-- BOT CHECK SCREEN -->
-<div id="botCheck">
-  <h2>Human Verification</h2>
+<!-- 🔒 BOT CHECK -->
+<div id="lockScreen">
+  <h2>Security Check</h2>
+
+  <!-- MATH -->
   <p id="question"></p>
-  <input type="number" id="answer" placeholder="Enter answer">
-  <button onclick="checkAnswer()">Verify</button>
+  <input type="number" id="answer" placeholder="Answer">
+
+  <!-- IMAGE TASK -->
+  <p><b>Select the CAT 🐱</b></p>
+
+  <div class="image-grid" id="imageGrid"></div>
+
+  <button onclick="verify()">Verify</button>
 </div>
 
-<!-- MAIN CONTENT -->
+<!-- ✅ MAIN CONTENT -->
 <div id="mainContent">
+  <header>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg">
+    <b>Support Team</b>
+  </header>
 
-<header>
-  <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg">
-  <div class="header-title">Support Team</div>
-</header>
-
-<div class="search-box">
-  <input type="text" placeholder="Search for help..." />
-</div>
-
-<div class="container">
-  <div class="section-title">Browse Help Topics</div>
-
-  <div class="grid">
-    <div class="card" onclick="goPage()">📦 Your Orders</div>
-    <div class="card" onclick="goPage()">💳 Payment Issues</div>
-    <div class="card" onclick="goPage()">🚚 Delivery & Shipping</div>
-    <div class="card" onclick="goPage()">🔐 Account & Security</div>
-    <div class="card" onclick="goPage()">↩️ Returns & Refunds</div>
-    <div class="card" onclick="goPage()">🛒 Buying & Orders</div>
+  <div class="container">
+    <h2>Welcome to Support</h2>
+    <p>You now have access.</p>
+    <button class="next-btn" onclick="goNext()">Continue</button>
   </div>
-
-  <div class="contact">
-    <div class="section-title">Need More Help?</div>
-    <p>Contact our support team</p>
-    <button onclick="goPage()">Contact Support</button>
-  </div>
-</div>
-
-<footer>
-  © 2026 Your Company
-</footer>
-
 </div>
 
 <script>
-// RANDOM QUESTION
-let num1 = Math.floor(Math.random() * 10) + 1;
-let num2 = Math.floor(Math.random() * 10) + 1;
-let correctAnswer = num1 + num2;
+// ⏱ 3 MIN EXPIRY
+const EXPIRY_TIME = 180000;
+
+// VERIFY STORAGE
+function isVerified() {
+  const t = localStorage.getItem("verifiedTime");
+  if (!t) return false;
+  return (Date.now() - t) < EXPIRY_TIME;
+}
+
+if (isVerified()) unlockPage();
+
+// 🔢 MATH
+let a = Math.floor(Math.random() * 10) + 1;
+let b = Math.floor(Math.random() * 10) + 1;
+let correctMath = a + b;
 
 document.getElementById("question").innerText =
-  `What is ${num1} + ${num2}?`;
+  "What is " + a + " + " + b + "?";
 
-function checkAnswer() {
-  let userAnswer = document.getElementById("answer").value;
+// 🖼 IMAGE DATA
+const images = [
+  {src: "https://cdn-icons-png.flaticon.com/128/616/616408.png", type: "cat"},
+  {src: "https://cdn-icons-png.flaticon.com/128/616/616430.png", type: "dog"},
+  {src: "https://cdn-icons-png.flaticon.com/128/616/616554.png", type: "lion"},
+  {src: "https://cdn-icons-png.flaticon.com/128/616/616490.png", type: "cow"},
+  {src: "https://cdn-icons-png.flaticon.com/128/616/616408.png", type: "cat"},
+  {src: "https://cdn-icons-png.flaticon.com/128/616/616430.png", type: "dog"}
+];
 
-  if (parseInt(userAnswer) === correctAnswer) {
-    document.getElementById("botCheck").style.display = "none";
-    document.getElementById("mainContent").style.display = "block";
+// SHUFFLE
+images.sort(() => Math.random() - 0.5);
+
+let selectedType = null;
+
+// RENDER IMAGES
+const grid = document.getElementById("imageGrid");
+
+images.forEach((imgData, index) => {
+  const img = document.createElement("img");
+  img.src = imgData.src;
+
+  img.onclick = () => {
+    document.querySelectorAll(".image-grid img")
+      .forEach(i => i.classList.remove("selected"));
+
+    img.classList.add("selected");
+    selectedType = imgData.type;
+  };
+
+  grid.appendChild(img);
+});
+
+// 🔒 VERIFY BOTH
+function verify() {
+  const userAnswer = parseInt(document.getElementById("answer").value);
+
+  if (userAnswer === correctMath && selectedType === "cat") {
+    localStorage.setItem("verifiedTime", Date.now());
+    unlockPage();
   } else {
-    alert("Wrong answer. Try again.");
+    alert("Verification failed! Try again.");
   }
 }
 
-function goPage() {
-  window.location.href = "logo.html";
+// 🔓 UNLOCK
+function unlockPage() {
+  document.getElementById("lockScreen").style.display = "none";
+  document.getElementById("mainContent").style.display = "block";
+}
+
+// ➡️ NEXT PAGE
+function goNext() {
+  window.location.href = "next.html";
 }
 </script>
 
